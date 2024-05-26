@@ -1,16 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/user.dart';
 import 'package:shop_app/provider/loginProvider.dart';
-import 'package:shop_app/server/UserLogin.dart';
-
+import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
+import 'package:shop_app/screens/login_success/login_success_screen.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
-import '../../../constants.dart';
-import '../../../helper/keyboard.dart';
-import '../../forgot_password/forgot_password_screen.dart';
-import '../../login_success/login_success_screen.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -21,13 +17,11 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  final bool _isLoading = false;
   String? email;
   String? password;
   bool? remember = false;
   final List<String?> errors = [];
-  
-  // TextEditingControllers for the text fields
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -49,7 +43,6 @@ class _SignFormState extends State<SignForm> {
 
   @override
   void dispose() {
-    // Dispose controllers when the widget is disposed
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -135,8 +128,7 @@ class _SignFormState extends State<SignForm> {
               const Text("Remember me"),
               const Spacer(),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
+                onTap: () => Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
                 child: const Text(
                   "Forgot Password",
                   style: TextStyle(decoration: TextDecoration.underline),
@@ -147,16 +139,30 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           const SizedBox(height: 16),
           Consumer<UserProvider>(
-            builder: (context,cont,child) {
+            builder: (context, cont, child) {
               return ElevatedButton(
                 onPressed: cont.loginState == LoginState.loading
-                    ? null : () => cont.login(email: _emailController.text, password: _passwordController.text, onSuccess: (UserModel){
-                      Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                    },onError: (error){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error: $error')),
-                      );
-                    }),
+                    ? null
+                    : () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          cont.login(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            onSuccess: (UserModel user) {
+                              Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Login successful!')),
+                              );
+                            },
+                            onError: (error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(error)),
+                              );
+                            },
+                          );
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   shape: const RoundedRectangleBorder(
@@ -167,7 +173,7 @@ class _SignFormState extends State<SignForm> {
                     ? const CircularProgressIndicator()
                     : const Text("Continue"),
               );
-            }
+            },
           ),
         ],
       ),
