@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
+// splash_screen.dart
 
-import '../../constants.dart';
+import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/init_screen.dart';
 import '../sign_in/sign_in_screen.dart';
 import 'components/splash_content.dart';
+import '../../constants.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routeName = "/splash";
@@ -15,6 +19,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   int currentPage = 0;
+  final box = GetStorage();
   List<Map<String, String>> splashData = [
     {
       "text": "Welcome to Tokoto, Let’s shop!",
@@ -22,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     },
     {
       "text":
-          "We help people conect with store \naround United State of America",
+          "We help people connect with stores \naround the United States of America",
       "image": "assets/images/splash_2.png"
     },
     {
@@ -30,6 +35,16 @@ class _SplashScreenState extends State<SplashScreen> {
       "image": "assets/images/splash_3.png"
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    bool isLoggedIn = box.read('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      Navigator.pushReplacementNamed(context, InitScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,8 +1,9 @@
+// user_provider.dart
+
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/user.dart';
-import 'package:shop_app/constants.dart';
 import 'package:get_storage/get_storage.dart';
 import '../server/UserLogin.dart';
+import '../models/user.dart';
 
 enum LoginState { normal, loading, error, networkError, success }
 
@@ -11,7 +12,15 @@ class UserProvider extends ChangeNotifier {
   LoginState loginState = LoginState.normal;
   final box = GetStorage();
 
-  login({
+  UserProvider() {
+    if (box.read('isLoggedIn') ?? false) {
+      user = UserModel.fromJson(box.read('user') ?? {});
+    }
+  }
+
+  bool get isLoggedIn => box.read('isLoggedIn') ?? false;
+
+  Future<void> login({
     required String email,
     required String password,
     Function(UserModel)? onSuccess,
@@ -21,6 +30,8 @@ class UserProvider extends ChangeNotifier {
       loginState = LoginState.loading;
       notifyListeners();
       user = await UserServices().login(email: email, password: password);
+      box.write('isLoggedIn', true);
+      box.write('user', user.toJson());
       loginState = LoginState.success;
       notifyListeners();
       if (onSuccess != null) {
@@ -33,5 +44,12 @@ class UserProvider extends ChangeNotifier {
         onError(e.toString());
       }
     }
+  }
+
+  Future<void> logout() async {
+    box.write('isLoggedIn', false);
+    box.remove('user');
+    loginState = LoginState.normal;
+    notifyListeners();
   }
 }

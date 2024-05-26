@@ -20,11 +20,16 @@ class UserServices {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       log(json.toString());
+      await saveUser(UserModel.fromJson(json["data"]));
       return UserModel.fromJson(json["data"]);
     } else {
       final json = jsonDecode(response.body);
       String errorMessage = json["message"] ?? "An unknown error occurred";
       throw errorMessage;
     }
+  }
+    saveUser(UserModel user) {
+    box.remove(kUserInfo);
+    box.write(kUserInfo, user.toJson());
   }
 }

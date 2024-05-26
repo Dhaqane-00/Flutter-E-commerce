@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kEndpoint="http://10.0.2.2:500/api";
+const kUserInfo="user_info";
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/provider/loginProvider.dart';
+import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
 import 'components/profile_menu.dart';
 import 'components/profile_pic.dart';
@@ -42,7 +45,10 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "Log Out",
               icon: "assets/icons/Log out.svg",
-              press: () {},
+              press: () {
+              Provider.of<UserProvider>(context, listen: false).logout();
+              Navigator.pushReplacementNamed(context, SignInScreen.routeName);
+              },
             ),
           ],
         ),

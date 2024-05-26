@@ -9,9 +9,11 @@ class SplashContent extends StatefulWidget {
     this.image,
   }) : super(key: key);
   final String? text, image;
+  
 
   @override
   State<SplashContent> createState() => _SplashContentState();
+  
 }
 
 class _SplashContentState extends State<SplashContent> {
@@ -21,7 +23,7 @@ class _SplashContentState extends State<SplashContent> {
       children: <Widget>[
         const Spacer(),
         const Text(
-          "TOKOTO",
+          "JUST COMMERCE",
           style: TextStyle(
             fontSize: 32,
             color: kPrimaryColor,
