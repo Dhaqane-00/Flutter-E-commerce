@@ -16,6 +16,18 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final CartScreenArguments? args =
+        ModalRoute.of(context)!.settings.arguments as CartScreenArguments?;
+    if (args != null) {
+      setState(() {
+        demoCarts.add(args.cart);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +76,13 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const CheckoutCard(),
+      bottomNavigationBar: CheckoutCard(cartItems: demoCarts),
     );
   }
+}
+
+class CartScreenArguments {
+  final Cart cart;
+
+  CartScreenArguments({required this.cart});
 }

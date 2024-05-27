@@ -20,13 +20,6 @@ class ColorDots extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          ...List.generate(
-            product.colors.length,
-            (index) => ColorDot(
-              color: product.colors[index],
-              isSelected: index == selectedColor,
-            ),
-          ),
           const Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
