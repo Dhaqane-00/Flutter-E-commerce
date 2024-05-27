@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/init_screen.dart';
 import '../sign_in/sign_in_screen.dart';
 import 'components/splash_content.dart';

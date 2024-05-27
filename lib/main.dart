@@ -8,8 +8,6 @@ import 'package:shop_app/firebase_options.dart';
 import 'package:shop_app/provider/loginProvider.dart';
 import 'package:shop_app/screens/init_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
-import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
 import 'routes.dart';
 import 'theme.dart';
 

@@ -48,6 +48,7 @@ class ProfileScreen extends StatelessWidget {
               press: () {
               Provider.of<UserProvider>(context, listen: false).logout();
               Navigator.pushReplacementNamed(context, SignInScreen.routeName);
+              
               },
             ),
           ],
