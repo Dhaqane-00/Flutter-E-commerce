@@ -41,6 +41,7 @@ class _PopularProductsState extends State<PopularProducts> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
+              print(snapshot.error);
               return const Center(child: Text('Failed to load products'));
             } else {
               List<Product> products = snapshot.data!;
