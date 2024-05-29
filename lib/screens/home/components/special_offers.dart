@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/products/products_screen.dart';
+import 'package:shop_app/server/Banners.dart';
+import 'package:shop_app/models/Banners.dart';
 
 import 'section_title.dart';
 
-class SpecialOffers extends StatelessWidget {
-  const SpecialOffers({
-    Key? key,
-  }) : super(key: key);
+class SpecialOffers extends StatefulWidget {
+  const SpecialOffers({Key? key}) : super(key: key);
+
+  @override
+  _SpecialOffersState createState() => _SpecialOffersState();
+}
+
+class _SpecialOffersState extends State<SpecialOffers> {
+  late Future<List<Banners>> futureBanners;
+
+  @override
+  void initState() {
+    super.initState();
+    futureBanners = BannersServices().fetchBanners();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +32,33 @@ class SpecialOffers extends StatelessWidget {
             press: () {},
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
-                },
-              ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
-                numOfBrands: 24,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
-                },
-              ),
-              const SizedBox(width: 20),
-            ],
-          ),
+        FutureBuilder<List<Banners>>(
+          future: futureBanners,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Text('No banners available');
+            } else {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: snapshot.data!.map((banner) {
+                    return SpecialOfferCard(
+                      image: banner.images ?? 'assets/images/default.png',
+                      category: banner.name ?? 'Category',
+                      numOfBrands: banner.brand ?? 0,
+                      press: () {
+                        Navigator.pushNamed(context, ProductsScreen.routeName);
+                      },
+                    );
+                  }).toList(),
+                ),
+              );
+            }
+          },
         ),
       ],
     );
@@ -74,9 +91,12 @@ class SpecialOfferCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: [
-                Image.asset(
+                Image.network(
                   image,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/images/default.png', fit: BoxFit.cover);
+                  },
                 ),
                 Container(
                   decoration: const BoxDecoration(

@@ -13,6 +13,7 @@ class ProductServices {
     );
 
     if (response.statusCode == 200) {
+      print("Product Data");
       final json = jsonDecode(response.body);
       log(json.toString());
       List<dynamic> productsJson = json["Date"];

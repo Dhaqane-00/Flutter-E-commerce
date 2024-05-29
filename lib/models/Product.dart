@@ -29,4 +29,6 @@ class Product {
       isPopular: json['isTrending'],
     );
   }
+
+  toJson() {}
 }
