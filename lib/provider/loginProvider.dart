@@ -1,5 +1,3 @@
-// user_provider.dart
-
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import '../server/UserLogin.dart';
@@ -19,6 +17,8 @@ class UserProvider extends ChangeNotifier {
   }
 
   bool get isLoggedIn => box.read('isLoggedIn') ?? false;
+
+  String? get userId => user.id; // Getter method to retrieve user ID
 
   Future<void> login({
     required String email,
