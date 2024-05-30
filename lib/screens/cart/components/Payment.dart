@@ -92,7 +92,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   border: OutlineInputBorder(),
                   labelText: 'Phone Number',
                   hintText: "61",
+                  
                 ),
+                keyboardType: TextInputType.phone,
                 maxLength: 9, // Set the maximum length
                 onChanged: (value) {
                   setState(() {

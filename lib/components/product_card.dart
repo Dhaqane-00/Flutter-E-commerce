@@ -4,42 +4,61 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../constants.dart';
 import '../models/Product.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     Key? key,
     this.width = 140,
-    this.aspectRetio = 1.02,
+    this.aspectRatio = 1.02,
     required this.product,
     required this.onPress,
   }) : super(key: key);
 
-  final double width, aspectRetio;
+  final double width, aspectRatio;
   final Product product;
   final VoidCallback onPress;
 
   @override
+  _ProductCardState createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  late bool isFavourite;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavourite = widget.product.isFavourite;
+  }
+
+  void toggleFavourite() {
+    setState(() {
+      isFavourite = !isFavourite;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: widget.width,
       child: GestureDetector(
-        onTap: onPress,
+        onTap: widget.onPress,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
-              aspectRatio: 1.02,
+              aspectRatio: widget.aspectRatio,
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: kSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(product.images[0]),
+                child: Image.network(widget.product.images[0]),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              product.title,
+              widget.product.title,
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 2,
             ),
@@ -47,7 +66,7 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${product.price}",
+                  "\$${widget.product.price}",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -56,13 +75,13 @@ class ProductCard extends StatelessWidget {
                 ),
                 InkWell(
                   borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
+                  onTap: toggleFavourite,
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     height: 24,
                     width: 24,
                     decoration: BoxDecoration(
-                      color: product.isFavourite
+                      color: isFavourite
                           ? kPrimaryColor.withOpacity(0.15)
                           : kSecondaryColor.withOpacity(0.1),
                       shape: BoxShape.circle,
@@ -70,7 +89,7 @@ class ProductCard extends StatelessWidget {
                     child: SvgPicture.asset(
                       "assets/icons/Heart Icon_2.svg",
                       colorFilter: ColorFilter.mode(
-                          product.isFavourite
+                          isFavourite
                               ? const Color(0xFFFF4848)
                               : const Color(0xFFDBDEE4),
                           BlendMode.srcIn),

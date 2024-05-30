@@ -106,6 +106,7 @@ class DetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: ElevatedButton(
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.pushNamed(
                   context,
                   CartScreen.routeName,

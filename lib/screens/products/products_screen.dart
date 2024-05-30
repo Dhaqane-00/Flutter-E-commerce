@@ -27,7 +27,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Products"),
+        title: const Text("Shopping",style: TextStyle(fontSize: 23),),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(

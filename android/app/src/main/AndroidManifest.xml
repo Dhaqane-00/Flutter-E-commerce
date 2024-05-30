@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
     <application
-        android:label="J-E-commerce"
+        android:label="J-E-Commerce"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">
