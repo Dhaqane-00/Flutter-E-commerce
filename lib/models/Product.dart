@@ -30,5 +30,7 @@ class Product {
     );
   }
 
+  get name => null;
+
   toJson() {}
 }

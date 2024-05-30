@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/home/components/slider.dart';
 
 import 'components/categories.dart';
 import 'components/discount_banner.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               HomeHeader(),
               DiscountBanner(),
+              HomeSlider(),
               Categories(),
               SpecialOffers(),
               SizedBox(height: 20),

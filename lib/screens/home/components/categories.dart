@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/models/Category.dart';
+import 'package:shop_app/screens/products/products_screen.dart';
 import 'package:shop_app/server/Category.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -42,7 +43,9 @@ class _CategoriesState extends State<Categories> {
                 return CategoryCard(
                   icon: category.photo ?? '',
                   text: category.name ?? 'Category',
-                  press: () {},
+                  press: () {
+                    Navigator.pushNamed(context, ProductsScreen.routeName);
+                  },
                 );
               }).toList(),
             );
