@@ -1,7 +1,6 @@
 class Category {
   String? name;
   String? description;
-  int? brands;
   String? photo;
   String? createdBy;
   String? id;
@@ -11,7 +10,6 @@ class Category {
   Category({
     this.name,
     this.description,
-    this.brands,
     this.photo,
     this.createdBy,
     this.id,
@@ -23,7 +21,6 @@ class Category {
     return Category(
       name: json['name'] as String?,
       description: json['description'] as String?,
-      brands: json['brands'] as int?,
       photo: json['photo'] as String?,
       createdBy: json['createdBy'] as String?,
       id: json['_id'] as String?,
@@ -32,11 +29,12 @@ class Category {
     );
   }
 
+  get icon => null;
+
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'description': description,
-      'brands': brands,
       'photo': photo,
       'createdBy': createdBy,
       '_id': id,

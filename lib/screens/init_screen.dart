@@ -29,7 +29,7 @@ class _InitScreenState extends State<InitScreen> {
     const HomeScreen(),
     const FavoriteScreen(),
     const Center(
-      child: Text("Chat"),
+      child: Text("Chat Comming Soon"),
     ),
     const ProfileScreen()
   ];

@@ -5,6 +5,7 @@ import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/screens/home/components/section_title.dart';
 import 'package:shop_app/screens/products/products_screen.dart';
 import 'package:shop_app/server/Product.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PopularProducts extends StatefulWidget {
   const PopularProducts({super.key});
@@ -39,7 +40,30 @@ class _PopularProductsState extends State<PopularProducts> {
           future: futureProducts,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              // Display shimmer effect while loading
+              return SizedBox(
+                height: 200, // Adjust height as needed
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5, // Displaying shimmer for 5 items
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.white,
+                        highlightColor: Colors.transparent,
+                        child: Container(
+                          width: 150, // Adjust width as needed
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return const Center(child: Text('Failed to load products'));
@@ -61,12 +85,12 @@ class _PopularProductsState extends State<PopularProducts> {
                                 context,
                                 DetailsScreen.routeName,
                                 arguments: ProductDetailsArguments(
-                                    product: products[index]),
+                                  product: products[index]
+                                ),
                               ),
                             ),
                           );
                         }
-
                         return const SizedBox.shrink(); // here by default width and height is 0
                       },
                     ),

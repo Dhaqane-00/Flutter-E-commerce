@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shop_app/constants.dart';
-import 'package:shop_app/models/Category.dart';
+import 'package:shop_app/models/Title.dart';
 
-class CategoryServices {
-  Future<List<Category>> fetchCategory() async {
+class TitleServices {
+  Future<List<NewTitle>> fetchTitle() async {
     var response = await http.get(
-      Uri.parse('$kEndpoint/category/getAllCategories'),
+      Uri.parse('$kEndpoint/title/getAllTitles'),
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
     );
 
@@ -16,15 +16,17 @@ class CategoryServices {
       final json = jsonDecode(response.body);
       log(json.toString());
 
-      // Check if 'categories' key exists and is not null
-      if (json.containsKey("categories") && json["categories"] != null) {
-        List<dynamic> categoriesJson = json["categories"];
-        return categoriesJson.map((json) => Category.fromJson(json)).toList();
+      // Check if the 'titles' key exists and contains data
+      if (json.containsKey("titles") && json["titles"] is List) {
+        // Parse the list of titles
+        List<dynamic> titlesJson = json["titles"];
+        return titlesJson.map((json) => NewTitle.fromJson(json)).toList();
       } else {
-        // Return an empty list if 'categories' key is missing or null
+        // Return an empty list if no titles found
         return [];
       }
     } else {
+      // Handle API error response
       final json = jsonDecode(response.body);
       String errorMessage = json["message"] ?? "An unknown error occurred";
       throw errorMessage;

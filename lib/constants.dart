@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kEndpoint="http://10.0.2.2:500/api";
+const kEndpoint="https://flutterbackend-production-d4d0.up.railway.app/api";
 const kUserInfo="user_info";
 
 const kPrimaryColor = Color(0xFFFF7643);

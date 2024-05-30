@@ -1,29 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/models/Category.dart';
+import 'package:shop_app/server/Category.dart';
+import 'package:shimmer/shimmer.dart';
 
-class Categories extends StatelessWidget {
-  const Categories({super.key});
+class Categories extends StatefulWidget {
+  const Categories({Key? key}) : super(key: key);
+
+  @override
+  _CategoriesState createState() => _CategoriesState();
+}
+
+class _CategoriesState extends State<Categories> {
+  late Future<List<Category>> futureCategories;
+
+  @override
+  void initState() {
+    super.initState();
+    futureCategories = CategoryServices().fetchCategory();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Flash Deal"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "Bill"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "Game"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "Daily Gift"},
-      {"icon": "assets/icons/Discover.svg", "text": "More"},
-    ];
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          categories.length,
-          (index) => CategoryCard(
-            icon: categories[index]["icon"],
-            text: categories[index]["text"],
-            press: () {},
+      child: FutureBuilder<List<Category>>(
+        future: futureCategories,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _buildShimmerEffect(); // Show shimmer effect while waiting
+          } else if (snapshot.hasError) {
+            print("Error: ${snapshot.error}");
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Text('No categories available');
+          } else {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: snapshot.data!.map((category) {
+                return CategoryCard(
+                  icon: category.photo ?? '',
+                  text: category.name ?? 'Category',
+                  press: () {},
+                );
+              }).toList(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildShimmerEffect() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(
+        3, // You can adjust the number of shimmer items as needed
+        (index) => Shimmer.fromColors(
+          baseColor: Colors.white,
+          highlightColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
       ),
@@ -56,7 +101,7 @@ class CategoryCard extends StatelessWidget {
               color: const Color(0xFFFFECDF),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: SvgPicture.asset(icon),
+            child: SvgPicture.network(icon),
           ),
           const SizedBox(height: 4),
           Text(text, textAlign: TextAlign.center)

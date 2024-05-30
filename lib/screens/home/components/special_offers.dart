@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/screens/products/products_screen.dart';
 import 'package:shop_app/server/Banners.dart';
 import 'package:shop_app/models/Banners.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'section_title.dart';
 
@@ -36,7 +37,31 @@ class _SpecialOffersState extends State<SpecialOffers> {
           future: futureBanners,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              // Display shimmer effect while loading
+              return SizedBox(
+                height: 120, // Adjust height as needed
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 3, // Displaying shimmer for 3 items
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.white,
+                        highlightColor: Colors.transparent,
+                        child: Container(
+                          width: 242, // Adjust width as needed
+                          height: 100, // Adjust height as needed
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
