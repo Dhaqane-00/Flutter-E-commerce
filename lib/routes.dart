@@ -1,4 +1,7 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:shop_app/SplashLogo.dart';
+import 'package:shop_app/screens/forgot_password/new_pass.dart';
+import 'package:shop_app/screens/forgot_password/otp_screen.dart';
 import 'package:shop_app/screens/products/products_screen.dart';
 import 'package:shop_app/screens/profile/components/helpCenter.dart';
 import 'package:shop_app/screens/profile/components/notification.dart';
@@ -33,6 +36,13 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
-  HelpCenter.routeName:(context) => const HelpCenter(),
-  Setting.routeName:(context) => const Setting(),
+  HelpCenter.routeName: (context) => const HelpCenter(),
+  Setting.routeName: (context) => const Setting(),
+  OtpScreenForget.routeName: (context) {
+    // Extract the email argument from the ModalRoute settings
+    final args = ModalRoute.of(context)!.settings.arguments as String;
+    return OtpScreenForget(email: args); // Pass the email to the widget
+  },
+  NewPassForget.routeName: (context) => const NewPassForget(),
+  LogoSplash.routeName:(context) => const LogoSplash(),
 };

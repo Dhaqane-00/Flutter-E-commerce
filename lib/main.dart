@@ -1,9 +1,8 @@
-// main.dart
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shop_app/SplashLogo.dart';
 import 'package:shop_app/firebase_options.dart';
 import 'package:shop_app/provider/CartProvider.dart';
 import 'package:shop_app/provider/ProductProvider.dart';
@@ -31,18 +30,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartNotifier()),
       ],
-      child: Consumer<UserProvider>(
-        builder: (context, userProvider, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'JUST E-COMMERCE',
-            theme: AppTheme.lightTheme(context),
-            initialRoute: userProvider.isLoggedIn
-                ? InitScreen.routeName
-                : SplashScreen.routeName,
-            routes: routes,
-          );
-        },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'JUST E-COMMERCE',
+        theme: AppTheme.lightTheme(context),
+        initialRoute: LogoSplash.routeName,
+        routes: routes,
       ),
     );
   }

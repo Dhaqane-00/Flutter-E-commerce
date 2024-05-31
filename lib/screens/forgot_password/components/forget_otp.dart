@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
-import 'package:shop_app/screens/init_screen.dart';
-import 'package:shop_app/server/UserSignup.dart';
+import 'package:shop_app/screens/forgot_password/new_pass.dart';
+import 'package:shop_app/constants.dart';
+import 'package:shop_app/server/UserLogin.dart';
 
-import '../../../constants.dart';
+class OtpForgetForm extends StatefulWidget {
+  final String email; // Declare email variable
 
-class OtpForm extends StatefulWidget {
-  const OtpForm({Key? key}) : super(key: key);
+  const OtpForgetForm({Key? key, required this.email}) : super(key: key);
 
   @override
   _OtpFormState createState() => _OtpFormState();
 }
 
-class _OtpFormState extends State<OtpForm> {
+class _OtpFormState extends State<OtpForgetForm> {
   final TextEditingController _pin1Controller = TextEditingController();
   final TextEditingController _pin2Controller = TextEditingController();
   final TextEditingController _pin3Controller = TextEditingController();
@@ -23,6 +23,9 @@ class _OtpFormState extends State<OtpForm> {
   final FocusNode _pin2FocusNode = FocusNode();
   final FocusNode _pin3FocusNode = FocusNode();
   final FocusNode _pin4FocusNode = FocusNode();
+
+  bool _isLoading = false;
+  final _userService = UserServices();
 
   @override
   void dispose() {
@@ -43,20 +46,29 @@ class _OtpFormState extends State<OtpForm> {
     }
   }
 
-  Future<void> _verifyOTP() async {
+  Future<void> _verifyOtp() async {
     String otp = _pin1Controller.text +
-                 _pin2Controller.text +
-                 _pin3Controller.text +
-                 _pin4Controller.text;
+        _pin2Controller.text +
+        _pin3Controller.text +
+        _pin4Controller.text;
 
-    var result = await OTP.otpVerification(otp);
+    setState(() {
+      _isLoading = true;
+    });
 
-    if (result['status'] == 'success') {
-      Navigator.pushNamed(context, InitScreen.routeName);
-    } else {
+    try {
+      await _userService.ForgetVerifyOtp(email: widget.email, otp: otp);
+      Navigator.pushNamed(context, NewPassForget.routeName,arguments: widget.email, );
+      
+    } catch (error) {
+      // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${result['message']}')),
+        SnackBar(content: Text(error.toString())),
       );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -148,8 +160,10 @@ class _OtpFormState extends State<OtpForm> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           ElevatedButton(
-            onPressed: _verifyOTP,
-            child: const Text("Continue"),
+            onPressed: _isLoading ? null : _verifyOtp,
+            child: _isLoading
+                ? CircularProgressIndicator() // Show loading indicator if _isLoading is true
+                : const Text("Continue"),
           ),
         ],
       ),

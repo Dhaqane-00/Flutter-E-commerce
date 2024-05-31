@@ -22,16 +22,16 @@ class _SplashScreenState extends State<SplashScreen> {
   List<Map<String, String>> splashData = [
     {
       "text": "Welcome to JUST, Let’s shop!",
-      "image": "assets/images/splash_1.png"
+      "image": "assets/lotties/img1.json"
     },
     {
       "text":
-          "We help people connect with stores \naround the United States of America",
-      "image": "assets/images/splash_2.png"
+          "We help people connect with stores \naround the Somalia",
+      "image": "assets/lotties/img2.json"
     },
     {
       "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
+      "image": "assets/lotties/img3.json"
     },
   ];
 

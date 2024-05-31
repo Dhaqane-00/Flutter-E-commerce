@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../constants.dart';
 
@@ -35,10 +36,10 @@ class _SplashContentState extends State<SplashContent> {
           textAlign: TextAlign.center,
         ),
         const Spacer(flex: 2),
-        Image.asset(
+        LottieBuilder.asset(
           widget.image!,
-          height: 265,
-          width: 235,
+          height: 350,
+          width: 350,
         ),
       ],
     );

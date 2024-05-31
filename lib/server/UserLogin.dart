@@ -32,4 +32,71 @@ class UserServices {
     box.remove(kUserInfo);
     box.write(kUserInfo, user.toJson());
   }
+
+
+
+  Future<void> ForgetVerifyOtp({required String email, required String otp}) async {
+    var data = {
+      "email": email,
+      "otp": otp,
+    };
+    var response = await http.post(
+      Uri.parse('$kEndpoint/user/ForgetVerifyOtp'),
+      body: jsonEncode(data),
+      
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      log(json.toString());
+      print(json["email"]);
+      return;
+    } else {
+      final json = jsonDecode(response.body);
+      String errorMessage = json["message"] ?? "An unknown error occurred";
+      throw errorMessage;
+    }
+  }
+    Future<void> resetPassword({required String email, required String newPassword}) async {
+    var data = {
+      "email": email,
+      "newPassword": newPassword
+    };
+    var response = await http.post(
+      Uri.parse('$kEndpoint/user/resetPassword'),
+      body: jsonEncode(data),
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      log(json.toString());
+      return;
+    } else {
+      final json = jsonDecode(response.body);
+      String errorMessage = json["message"] ?? "An unknown error occurred";
+      throw errorMessage;
+    }
+  }
+}
+class ForgotPasswordServices {
+  Future<void> sendResetOTP({required String email}) async {
+    var data = {"email": email};
+    var response = await http.post(
+      Uri.parse('$kEndpoint/user/forgotPassword'),
+      body: jsonEncode(data),
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      log(json.toString());
+      return;
+    } else {
+      final json = jsonDecode(response.body);
+      String errorMessage = json["message"] ?? "An unknown error occurred";
+      throw errorMessage;
+    }
+  }
 }
