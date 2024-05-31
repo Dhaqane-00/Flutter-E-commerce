@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "332457764649",
-    "project_id": "e-commerce-f5feb",
-    "storage_bucket": "e-commerce-f5feb.appspot.com"
+    "project_number": "1098897404759",
+    "project_id": "flutter-fd966",
+    "storage_bucket": "flutter-fd966.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:332457764649:android:66136270515cb0e5e57938",
+        "mobilesdk_app_id": "1:1098897404759:android:6380d5618d2e9d8d690412",
         "android_client_info": {
-          "package_name": "com.example.demo_app"
+          "package_name": "com.just.ecommerce"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCRz8giir7kFbdMkMYFl-AskJDo4pQqRcE"
+          "current_key": "AIzaSyAaUNignwBb04E8vCj5nbXPGVNf4U5r1K0"
         }
       ],
       "services": {
