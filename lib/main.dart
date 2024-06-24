@@ -13,8 +13,6 @@ import 'routes.dart';
 import 'theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GetStorage.init();
   runApp(const MyApp());
 }
@@ -32,7 +30,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'JUST E-COMMERCE',
+        title: 'SAMAWADE SHOPING',
         theme: AppTheme.lightTheme(context),
         initialRoute: LogoSplash.routeName,
         routes: routes,

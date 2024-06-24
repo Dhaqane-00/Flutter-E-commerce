@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const kEndpoint="https://flutterbackend-production-d4d0.up.railway.app/api";
 const kUserInfo="user_info";
 
-const kPrimaryColor = Color(0xFFFF7643);
+const kPrimaryColor = Color.fromARGB(255, 76, 67, 255);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,

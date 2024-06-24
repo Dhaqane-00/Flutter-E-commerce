@@ -50,8 +50,8 @@ class _PopularProductsState extends State<PopularProducts> {
                     return Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Shimmer.fromColors(
-                        baseColor: Colors.white,
-                        highlightColor: Colors.transparent,
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
                         child: Container(
                           width: 150, // Adjust width as needed
                           decoration: BoxDecoration(
@@ -85,13 +85,13 @@ class _PopularProductsState extends State<PopularProducts> {
                                 context,
                                 DetailsScreen.routeName,
                                 arguments: ProductDetailsArguments(
-                                  product: products[index]
-                                ),
+                                    product: products[index]),
                               ),
                             ),
                           );
                         }
-                        return const SizedBox.shrink(); // here by default width and height is 0
+                        return const SizedBox
+                            .shrink(); // here by default width and height is 0
                       },
                     ),
                     const SizedBox(width: 20),

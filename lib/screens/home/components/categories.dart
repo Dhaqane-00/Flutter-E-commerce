@@ -62,8 +62,8 @@ class _CategoriesState extends State<Categories> {
       children: List.generate(
         3, // You can adjust the number of shimmer items as needed
         (index) => Shimmer.fromColors(
-          baseColor: Colors.white,
-          highlightColor: Colors.transparent,
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
           child: Container(
             padding: const EdgeInsets.all(16),
             height: 56,

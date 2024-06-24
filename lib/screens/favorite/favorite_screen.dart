@@ -58,8 +58,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         onPress: () => Navigator.pushNamed(
                           context,
                           DetailsScreen.routeName,
-                          arguments: ProductDetailsArguments(
-                              product: products[index]),
+                          arguments:
+                              ProductDetailsArguments(product: products[index]),
                         ),
                       ),
                     );
@@ -83,8 +83,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         crossAxisSpacing: 16,
       ),
       itemBuilder: (context, index) => Shimmer.fromColors(
-        baseColor: Colors.white,
-        highlightColor: Colors.transparent,
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
         child: const ProductCardShimmer(), // Custom shimmer product card widget
       ),
     );

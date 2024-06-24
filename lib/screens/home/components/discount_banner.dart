@@ -78,8 +78,8 @@ class _DiscountBannerState extends State<DiscountBanner> {
 
   Widget _buildShimmerEffect() {
     return Shimmer.fromColors(
-      baseColor: Colors.white,
-      highlightColor: Colors.transparent,
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(20),

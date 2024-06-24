@@ -27,7 +27,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shopping",style: TextStyle(fontSize: 23),),
+        title: const Text(
+          "Shopping",
+          style: TextStyle(fontSize: 23),
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -55,8 +58,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     onPress: () => Navigator.pushNamed(
                       context,
                       DetailsScreen.routeName,
-                      arguments: ProductDetailsArguments(
-                          product: products[index]),
+                      arguments:
+                          ProductDetailsArguments(product: products[index]),
                     ),
                   ),
                 );
@@ -78,8 +81,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
         crossAxisSpacing: 16,
       ),
       itemBuilder: (context, index) => Shimmer.fromColors(
-        baseColor: Colors.white,
-        highlightColor: Colors.transparent,
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
         child: const ProductCardShimmer(), // Custom shimmer product card widget
       ),
     );

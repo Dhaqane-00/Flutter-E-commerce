@@ -47,8 +47,8 @@ class _SpecialOffersState extends State<SpecialOffers> {
                     return Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Shimmer.fromColors(
-                        baseColor: Colors.white,
-                        highlightColor: Colors.transparent,
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
                         child: Container(
                           width: 242, // Adjust width as needed
                           height: 100, // Adjust height as needed
@@ -120,7 +120,8 @@ class SpecialOfferCard extends StatelessWidget {
                   image,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/images/default.png', fit: BoxFit.cover);
+                    return Image.asset('assets/images/default.png',
+                        fit: BoxFit.cover);
                   },
                 ),
                 Container(
