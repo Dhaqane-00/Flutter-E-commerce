@@ -34,7 +34,7 @@ class HomeSlider extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return ShimmerLoading();
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error loading image'));
+          return ShimmerLoading();
         } else {
           return Center(
             child: ClipRRect(

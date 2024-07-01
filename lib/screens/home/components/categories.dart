@@ -31,8 +31,8 @@ class _CategoriesState extends State<Categories> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return _buildShimmerEffect(); // Show shimmer effect while waiting
           } else if (snapshot.hasError) {
+            return _buildShimmerEffect();
             print("Error: ${snapshot.error}");
-            return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Text('No categories available');
           } else {

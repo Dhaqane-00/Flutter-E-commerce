@@ -31,7 +31,7 @@ class _DiscountBannerState extends State<DiscountBanner> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildShimmerEffect(); // Show shimmer effect while waiting
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return _buildShimmerEffect();
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           print(snapshot.data);
           return const Text('No titles found');

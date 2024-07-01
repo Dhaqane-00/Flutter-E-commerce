@@ -40,31 +40,18 @@ class _PopularProductsState extends State<PopularProducts> {
           future: futureProducts,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              // Display shimmer effect while loading
-              return SizedBox(
-                height: 200, // Adjust height as needed
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5, // Displaying shimmer for 5 items
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          width: 150, // Adjust width as needed
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+              // Use ShimmerLoading class while loading
+              return const ShimmerLoading(
+                itemCount: 5,  // Number of shimmer items to display
+                width: 150,    // Width of shimmer item
+                height: 200,   // Height of shimmer item
               );
             } else if (snapshot.hasError) {
+              return const ShimmerLoading(
+                itemCount: 5,  // Number of shimmer items to display
+                width: 150,    // Width of shimmer item
+                height: 200,   // Height of shimmer item
+              );
               print(snapshot.error);
               return const Center(child: Text('Failed to load products'));
             } else {
@@ -90,8 +77,7 @@ class _PopularProductsState extends State<PopularProducts> {
                             ),
                           );
                         }
-                        return const SizedBox
-                            .shrink(); // here by default width and height is 0
+                        return const SizedBox.shrink(); // Default width and height is 0
                       },
                     ),
                     const SizedBox(width: 20),
@@ -102,6 +88,47 @@ class _PopularProductsState extends State<PopularProducts> {
           },
         ),
       ],
+    );
+  }
+}
+
+
+class ShimmerLoading extends StatelessWidget {
+  final int itemCount;
+  final double width;
+  final double height;
+
+  const ShimmerLoading({
+    Key? key,
+    this.itemCount = 5, // Default to 5 items
+    this.width = 150,   // Default width
+    this.height = 200,  // Default height
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: itemCount,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                width: width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

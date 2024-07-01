@@ -24,7 +24,7 @@ class _SplashContentState extends State<SplashContent> {
       children: <Widget>[
         const Spacer(),
         const Text(
-          "SAMAWADE ONLINE",
+          "E-COMMERCE ONLINE",
           style: TextStyle(
             fontSize: 32,
             color: kPrimaryColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/loginProvider.dart';
+import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/screens/profile/components/helpCenter.dart';
 import 'package:shop_app/screens/profile/components/setting.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
@@ -39,8 +40,16 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "My Account",
               icon: "assets/icons/User Icon.svg",
+              press: () => {
+                Navigator.pushNamed(context, CompleteProfileScreen.routeName),
+              },
+            ),
+            ProfileMenu(
+              text: "My Orders",
+              icon: "assets/icons/Cart Icon.svg",
               press: () => {},
             ),
+
             ProfileMenu(
               text: "Notifications",
               icon: "assets/icons/Bell.svg",

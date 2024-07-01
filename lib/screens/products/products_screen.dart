@@ -42,7 +42,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return _buildShimmerEffect(); // Show shimmer effect while waiting
               } else if (snapshot.hasError) {
-                return const Center(child: Text('Failed to load products'));
+                return _buildShimmerEffect(); 
+                return Center(child: Text('Failed to load products'));
               } else {
                 List<Product> products = snapshot.data!;
                 return GridView.builder(

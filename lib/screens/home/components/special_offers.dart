@@ -38,32 +38,18 @@ class _SpecialOffersState extends State<SpecialOffers> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // Display shimmer effect while loading
-              return SizedBox(
-                height: 120, // Adjust height as needed
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3, // Displaying shimmer for 3 items
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          width: 242, // Adjust width as needed
-                          height: 100, // Adjust height as needed
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+              return const ShimmerLoading(
+                itemCount: 4,
+                width: 242,
+                height: 100,
               );
             } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+                            return const ShimmerLoading(
+                itemCount: 4,
+                width: 242,
+                height: 100,
+              );
+              print("Error: ${snapshot.error}");
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Text('No banners available');
             } else {
@@ -163,6 +149,46 @@ class SpecialOfferCard extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+class ShimmerLoading extends StatelessWidget {
+  final int itemCount;
+  final double width;
+  final double height;
+
+  const ShimmerLoading({
+    Key? key,
+    this.itemCount = 3,
+    this.width = 242,
+    this.height = 100,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: itemCount,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

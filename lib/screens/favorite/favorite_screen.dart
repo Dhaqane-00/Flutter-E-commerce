@@ -39,6 +39,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return _buildShimmerEffect(); // Show shimmer effect while waiting
                   } else if (snapshot.hasError) {
+                    return _buildShimmerEffect(); // Show shimmer effect while Loading
                     return const Center(child: Text('Failed to load products'));
                   } else {
                     List<Product> products = snapshot.data!

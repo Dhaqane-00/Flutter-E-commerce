@@ -1,4 +1,4 @@
-class UserModel {
+class UserUpdate {
   String? id;
   String? name;
   String? email;
@@ -12,7 +12,7 @@ class UserModel {
   String? otp;
   String? otpExpires;
 
-  UserModel({
+  UserUpdate({
     this.id,
     this.name,
     this.email,
@@ -27,8 +27,8 @@ class UserModel {
     this.otpExpires,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
+  factory UserUpdate.fromJson(Map<String, dynamic> json) {
+    return UserUpdate(
       id: json['_id'],
       name: json['name'],
       email: json['email'],

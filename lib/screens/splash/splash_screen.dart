@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to SAMAWADE, Let’s shop!",
+      "text": "Welcome to E-COMMERCE, Let’s shop!",
       "image": "assets/lotties/img1.json"
     },
     {
