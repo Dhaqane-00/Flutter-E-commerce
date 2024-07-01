@@ -12,13 +12,16 @@ import 'components/top_rounded_container.dart';
 class DetailsScreen extends StatelessWidget {
   static String routeName = "/details";
 
-  const DetailsScreen({super.key});
+  const DetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final ProductDetailsArguments args =
         ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments;
     final product = args.product;
+
+    int numOfItems = 1; // Initialize numOfItems
+
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -90,7 +93,12 @@ class DetailsScreen extends StatelessWidget {
                   color: const Color(0xFFF6F7F9),
                   child: Column(
                     children: [
-                      ColorDots(product: product),
+                      ColorDots(
+                        product: product,
+                        onNumOfItemsChange: (newNumOfItems) {
+                          numOfItems = newNumOfItems; // Update numOfItems
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -111,7 +119,7 @@ class DetailsScreen extends StatelessWidget {
                   context,
                   CartScreen.routeName,
                   arguments: CartScreenArguments(
-                    cart: Cart(product: product, numOfItem: 1),
+                    cart: Cart(product: product, numOfItem: numOfItems),
                   ),
                 );
               },
