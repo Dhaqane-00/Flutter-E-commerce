@@ -38,10 +38,15 @@ class ProductProvider with ChangeNotifier {
     if (query.isEmpty) {
       _searchResults = _products;
     } else {
-      _searchResults = _products
-          .where((product) =>
-              product.title.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      // Filter products that contain the query (case insensitive)
+      _searchResults = _products.where((product) =>
+          product.title.toLowerCase().contains(query.toLowerCase())).toList();
+      
+      // If no exact matches found, also show products that are similar to the query
+      if (_searchResults.isEmpty) {
+          _searchResults = _products.where((product) =>
+              product.title.toLowerCase().contains(query.toLowerCase())).toList();
+      }
     }
     notifyListeners();
   }

@@ -1,66 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/provider/ProductProvider.dart';
+import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/components/product_card.dart';
-import 'package:shop_app/models/Product.dart';
-import 'package:shop_app/server/Product.dart';
-import '../details/details_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+import 'search_field.dart'; // Import your SearchField component
 
-  @override
-  _FavoriteScreenState createState() => _FavoriteScreenState();
-}
-
-class _FavoriteScreenState extends State<FavoriteScreen> {
-  late Future<List<Product>> futureProducts;
-
-  @override
-  void initState() {
-    super.initState();
-    futureProducts = ProductServices().fetchProducts();
-  }
-
+class SearchResultsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Text(
-            "Favorites",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: FutureBuilder<List<Product>>(
-                future: futureProducts,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return _buildShimmerEffect(); // Show shimmer effect while waiting
-                  } else if (snapshot.hasError) {
-                    return _buildShimmerEffect(); // Show shimmer effect while Loading
-                    return const Center(child: Text('Failed to load products'));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Search',style: TextStyle(fontSize: 23),),
+        centerTitle: true,
+        leading: Container(), // Use Container() instead of Text("") for cleaner leading
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: Consumer<ProductProvider>(
+                builder: (context, productProvider, child) {
+                  return SearchField(
+                    onSearch: productProvider.searchProducts,
+                    onSubmit: () {},
+                  );
+                },
+              ),
+            ),
+            Expanded(
+              flex: 10,
+              child: Consumer<ProductProvider>(
+                builder: (context, productProvider, child) {
+                  if (productProvider.isLoading) {
+                    return _buildShimmerEffect(); // Show shimmer effect while loading
+                  } else if (productProvider.error.isNotEmpty) {
+                    return _buildShimmerEffect(); // Show shimmer effect while Error
+                    return Center(child: Text('Error: ${productProvider.error}'));
                   } else {
-                    List<Product> products = snapshot.data!
-                        .where((product) => product.isFavourite)
-                        .toList();
                     return GridView.builder(
-                      itemCount: products.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                      itemCount: productProvider.searchResults.length,
+                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 0.7,
                         mainAxisSpacing: 20,
                         crossAxisSpacing: 16,
                       ),
                       itemBuilder: (context, index) => ProductCard(
-                        product: products[index],
+                        product: productProvider.searchResults[index],
                         onPress: () => Navigator.pushNamed(
                           context,
                           DetailsScreen.routeName,
-                          arguments:
-                              ProductDetailsArguments(product: products[index]),
+                          arguments: ProductDetailsArguments(
+                            product: productProvider.searchResults[index],
+                          ),
                         ),
                       ),
                     );
@@ -68,8 +63,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 },
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -93,7 +88,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 }
 
 class ProductCardShimmer extends StatelessWidget {
-  const ProductCardShimmer({super.key});
+  const ProductCardShimmer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

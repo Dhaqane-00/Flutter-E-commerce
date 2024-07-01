@@ -30,8 +30,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
         title: const Text(
           "Shopping",
           style: TextStyle(fontSize: 23),
+        
         ),
         centerTitle: true,
+        leading: Container(),
       ),
       body: SafeArea(
         child: Padding(
@@ -74,7 +76,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   Widget _buildShimmerEffect() {
     return GridView.builder(
-      itemCount: 6, // Adjust the number of shimmer items as needed
+      itemCount: 12, // Adjust the number of shimmer items as needed
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,
         childAspectRatio: 0.7,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/CartProvider.dart';
-
+import 'package:shop_app/provider/ProductProvider.dart';
+import 'package:shop_app/screens/home/components/SearchResultsScreen.dart';
 import '../../cart/cart_screen.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
@@ -18,7 +19,23 @@ class HomeHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Expanded(child: SearchField()),
+          Expanded(
+            child: Consumer<ProductProvider>(
+              builder: (context, productProvider, child) {
+                return SearchField(
+                  onSearch: productProvider.searchProducts,
+                  onSubmit: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchResultsScreen(),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
           const SizedBox(width: 16),
           Consumer<CartNotifier>(
             builder: (context, cartNotifier, child) => IconBtnWithCounter(
