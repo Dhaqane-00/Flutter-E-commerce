@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/init_screen.dart';
+import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/server/UserSignup.dart';
 
 import '../../../constants.dart';
@@ -52,7 +53,7 @@ class _OtpFormState extends State<OtpForm> {
     var result = await OTP.otpVerification(otp);
 
     if (result['status'] == 'success') {
-      Navigator.pushNamed(context, InitScreen.routeName);
+      Navigator.pushNamed(context, SignInScreen.routeName);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: ${result['message']}')),

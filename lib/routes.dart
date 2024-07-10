@@ -46,4 +46,5 @@ final Map<String, WidgetBuilder> routes = {
   },
   NewPassForget.routeName: (context) => const NewPassForget(),
   LogoSplash.routeName:(context) => const LogoSplash(),
+  NotificationPage.routeName:(context) => const NotificationPage(),
 };

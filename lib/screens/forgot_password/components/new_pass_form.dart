@@ -3,6 +3,7 @@ import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
+import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/server/UserLogin.dart';// Import UserServices
 
 class NewPasswordForm extends StatefulWidget {
@@ -49,7 +50,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
         // Reset password logic using widget.email and password
         await _userService.resetPassword(email: widget.email, newPassword: password!);
 
-        Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+        Navigator.pushNamed(context, SignInScreen.routeName);
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.toString())),

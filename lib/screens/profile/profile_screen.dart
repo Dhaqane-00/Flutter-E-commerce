@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/provider/loginProvider.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/screens/profile/components/helpCenter.dart';
+import 'package:shop_app/screens/profile/components/notification.dart';
 import 'package:shop_app/screens/profile/components/setting.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
@@ -21,7 +22,9 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text("Profile",style: TextStyle(fontSize: 20),),
+        centerTitle: true,
+        leading: Container(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -53,7 +56,9 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "Notifications",
               icon: "assets/icons/Bell.svg",
-              press: () {},
+              press: () {
+                Navigator.pushNamed(context, NotificationPage.routeName);
+              },
             ),
             ProfileMenu(
               text: "Settings",
