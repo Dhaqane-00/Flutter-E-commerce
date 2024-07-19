@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/SplashLogo.dart';
+import 'package:shop_app/screens/cart/components/PaymentSuccessScreen.dart';
+import 'package:shop_app/screens/cart/components/OrdersScreen.dart';
 import 'package:shop_app/screens/forgot_password/new_pass.dart';
 import 'package:shop_app/screens/forgot_password/otp_screen.dart';
 import 'package:shop_app/screens/products/products_screen.dart';
@@ -47,4 +49,6 @@ final Map<String, WidgetBuilder> routes = {
   NewPassForget.routeName: (context) => const NewPassForget(),
   LogoSplash.routeName:(context) => const LogoSplash(),
   NotificationPage.routeName:(context) => const NotificationPage(),
+  PaymentSuccessScreen.routeName:(context) =>  PaymentSuccessScreen(),
+  OrdersScreen.routeName:(context) =>  OrdersScreen(),
 };

@@ -1,9 +1,7 @@
-import 'package:shop_app/models/Product.dart';
-
 class Order {
   String? user;
   String? payment;
-  List<Product>? products; // Updated type to List<Product>
+  List<Map<String, dynamic>>? products;
   double? total;
   String? note;
   String? phone;
@@ -19,14 +17,17 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
-      user: json['user'],
-      payment: json['payment'],
+      user: json['user'] as String?,
+      payment: json['payment'] as String?,
       products: (json['products'] as List<dynamic>?)
-          ?.map((productJson) => Product.fromJson(productJson))
+          ?.map((productJson) => {
+                'product': productJson['product'] as String,
+                'quantity': productJson['quantity'] as int,
+              })
           .toList(),
-      total: json['total'] != null ? json['total'].toDouble() : null,
-      note: json['note'],
-      phone: json['phone'],
+      total: (json['total'] as num?)?.toDouble(), // Correctly handle 'total'
+      note: json['note'] as String?,
+      phone: json['phone'] as String?,
     );
   }
 
@@ -34,7 +35,7 @@ class Order {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user'] = user;
     data['payment'] = payment;
-    data['products'] = products?.map((product) => product.toJson()).toList();
+    data['products'] = products;
     data['total'] = total;
     data['note'] = note;
     data['phone'] = phone;
